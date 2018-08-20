@@ -1,4 +1,72 @@
 ######update语句#######
-UPDATE table_name SET col_name = "new_val" WHERE col2_name = "certain_val"
+UPDATE table_name SET col_name = 'new_val' WHERE col2_name = 'certain_val'
+
 ##########delete#########
 DELETE FROM table_name WHERE col_name = Val ##删除表中col列为Val的这一行（Q:如何删除某一个空）
+
+#######pattern like （%用来表示缺失的字符）######
+SELECT * FROM table_name WHERE col_name LIKE '%org%' ##col列中包含org三个字符的对象
+SELECT * FROM table_name WHERE col_name NOT LIKE '%lon%'  ## col列中不包含lon这三个字符的对象
+
+#####sql通配符###########
+SELECT * FROM table_name WHERE col_name LIKE 'ne%' ## 表中col列里以ne开头的对象
+SELECT * FROM table_name WHERE col_name LIKE '_ew'  ## -只代表一个子字符，返回表中col列里，第二，三个字符为e,w的对象
+SELECT * FROM table_name WHERE col_name LIKE '[NWB%]'  ## 返回表中col里以N,W,或B开头的对象
+SELECT * FROM table_name WHERE col-name LIKE '[!NWB]'  ##返回表中col里不以N,W和B 开头的对象（和NOT LIKE '[NWB]'有什么区别）
+
+#######between的用法#######
+SELECT * FROM table_name WHERE col_name BETWEEN 'A' AND 'B'
+SELECT * FROM table_name WHERE col_name NOT BETWEEN 'A' AND 'B'
+
+####### Alias（AS）指定别名#####
+SELECT po.OrderID, p.LastName, p.FirstName                  
+FROM Persons AS p, Product_Orders AS po
+WHERE p.LastName='Adams' AND p.FirstName='John' 
+
+SELECT column_name(s)
+FROM table_name
+AS alias_name
+
+
+SELECT LastName AS Family, FirstName AS Name FROM Persons
+
+SELECT column_name AS alias_name
+FROM table_name
+
+#######JOIN######
+SELECT table1.col1, teble2.col2, table3.col3
+FROM table1, table2, table3
+WHERE table1.colX = table2.colY = table3.colZ
+
+###INNER JOIN 返回表1和表2的交集
+select * from Table A inner join Table B on Table A.id=Table B.id 
+
+
+####LEFT JOIN产生表1的完全集，而2表中匹配的则返回，没有匹配的则以null值取代。
+select column_name(s)
+from table 1
+LEFT JOIN table 2
+ON table 1.column_name=table 2.column_name
+
+select * from Table A left join Table B on Table A.id=Table B.id
+
+
+###RIGHT JOIN 产生表2的完全集，而1表中匹配的则返回，没有匹配的则以null值取代。
+select column_name(s)
+from table 1
+RIGHT JOIN table 2
+ON table 1.column_name=table 2.column_name
+
+select * from Table A right join Table B
+on Table A.id=Table B.id
+
+####FULL JOIN 产生1和2的并集。若没有匹配的记录，则会以null做为值。
+select column_name(s)
+from table 1
+FULL OUTER JOIN table 2
+ON table 1.column_name=table 2.column_name
+
+select * from Table A full outer join Table B
+on Table A.id=Table B.id
+
+
