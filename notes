@@ -1,0 +1,4 @@
+######update语句#######
+UPDATE table_name SET col_name = "new_val" WHERE col2_name = "certain_val"
+##########delete#########
+DELETE FROM table_name WHERE col_name = Val ##删除表中col列为Val的这一行（Q:如何删除某一个空）
