@@ -1,0 +1,31 @@
+#####ISNULL()、NVL()、IFNULL()处理NULL值（将NULL值处理为0）
+SELECT ProductName,UnitPrice*(UnitsInStock+ISNULL(UnitsOnOrder,0))
+FROM Products
+
+#########GROUP BY(重点）########
+SELECT customer,  SUM(orderprice) FROM Orders
+GROUP BY customer
+
+SELECT Customer,OrderDate,SUM(OrderPrice) FROM Orders
+GROUP BY Customer,OrderDate
+
+##########HAVING########
+SELECT Customer,SUM(OrderPrice) FROM Orders
+WHERE Customer='Bush' OR Customer='Adams'
+GROUP BY Customer
+HAVING SUM(OrderPrice)>1500
+
+##########UCASE/LCASE（所选字符转换大写/小写）########
+SELECT UCASE(lastname), firstname FROM Orders
+SELECT LCASE(firstname) FROM Orders
+
+############MID()#########
+SELECT MID(column_name,start, length) FROM table_name
+
+#########LEN()返回所选的字符长度####
+SELECT LEN(col_name) as new_name FROM table_name
+
+###### ROUND() 将数值的字段舍成指定的小数位数#########
+SELECT ROUND(unitprice, 1) FROM Orders
+
+
