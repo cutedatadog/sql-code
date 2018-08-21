@@ -3,6 +3,8 @@ UPDATE table_name SET col_name = 'new_val' WHERE col2_name = 'certain_val'
 
 ##########delete#########
 DELETE FROM table_name WHERE col_name = Val ##删除表中col列为Val的这一行（Q:如何删除某一个空）
+DELETE * FROM table_name ### 和 TRUNCATE TABLE table_name 有什么区别？
+
 
 #######pattern like （%用来表示缺失的字符）######
 SELECT * FROM table_name WHERE col_name LIKE '%org%' ##col列中包含org三个字符的对象
@@ -68,5 +70,139 @@ ON table 1.column_name=table 2.column_name
 
 select * from Table A full outer join Table B
 on Table A.id=Table B.id
+
+###SELECT INTO for table backup###########
+SELECT * INTO table_name2 FROM table_name1
+
+SELECT Persons.LastName,Orders.OrderNo
+INTO Persons_Order_Backup
+FROM Persons
+INNER JOIN Orders
+ON Persons.Id_P=Orders.Id_P
+
+##CREATE DATABASE/TABLE###
+CREATE DATABASE class_table
+CREATE TABLE junior_1st
+(
+stu_id int,
+class_id int,
+firstname varchart(xx),
+lastname varchart(xx),
+classdate date
+)
+
+####constraint#####
+##UNIQUE 为列或列集合提供唯一性保证, 取消用alter和drop###
+CREATE TABLE junior_1st
+(
+stu_id int NOT NULL,
+class_id int,
+firstname varchart(xx),
+lastname varchart(xx),
+classdate date
+UNIQUE(stu_id)
+)
+
+ALTER TABLE junior_1st
+ADD UNIQUE(stu_id)
+
+#########外键############
+CREATE TABLE class_1st
+(teacher_id int NOT NULL,
+coursename varchart(225),
+course_id int NOT NULL
+FOREIGN KEY(course_id) REFERENCES junior_1st(class_id)
+)
+
+#############CHECK约束###########
+CREATE TABLE class_1st
+(teacher_id int NOT NULL CHECK(teacher_id>0),
+coursename varchart(225),
+course_id int NOT NULL
+）
+
+CREATE TABLE class_1st
+(teacher_id int NOT NULL,
+coursename varchart(225),
+course_id int NOT NULL
+coursedate date
+CONSTRAINT chk_class_1st CHECK(teacher_id>0 AND coursename='Advanced Data Analysis')
+)
+###additional##
+ALTER TABLE junior_1st
+ADD CHECK (class_id>0)
+
+ALTER TABLE class_1st
+ADD CONSTRAINT chk_class_1st CHECK(teacher_id>0 AND coursename='Advanced Data Analysis')
+)
+
+ALTER TABLE class_1st
+DROP CONSTRAINT chk_class_1st
+DROP CHECK chk_class_1st
+
+###########DEFAULT############
+CREATE TABLE junior_1st
+(
+stu_id int NOT NULL,
+class_id int,
+firstname varchart(xx),
+lastname varchart(xx) DEFAULT 'XIZI',
+classdate date DEFAULT GETDATE()
+UNIQUE(stu_id)
+)
+
+ALTER TABLE junior_1st
+ALTER lastname SET DEFAULT 'XIZI'
+ALTER classdate SET DEFAULT GETDATE()
+
+ALTER lastname DROP DEFAULT
+
+
+############CREATE INDEX##########
+pending
+
+#######AUTO INCREMENT#####自动生成字段值，开始值默认是1
+CREATE TABLE Persons
+(
+P_Id int NOT NULL AUTO_INCREMENT,
+LastName varchar(255) NOT NULL,
+FirstName varchar(255),
+Address varchar(255),
+City varchar(255),
+PRIMARY KEY (P_Id)
+)
+
+####使用其他起始值######
+ALTER TABLE Persons AUTO_INCREMENT=1001
+
+########CREATE VIEW####
+CREATE VIEW [CLASS TABLE] AS
+SELECT class_id, classdate 
+FROM junior_1st 
+WHERE lastname='WANG' AND firstname='XIZI'
+
+SELECT * FROM [CLASS TABLE]
+
+**ADV
+CREATE VIEW [Category Sales For 1997] AS
+SELECT DISTINCT CategoryName,Sum(ProductSales) AS CategorySales
+FROM [Product Sales for 1997]
+GROUP BY CategoryName 
+
+SELECT * FROM [Category Sales For 1997]
+WHERE CategoryName='Beverages'
+
+####IS NULL/ IS NOT NULL######
+SELECT col_nameX,Y FROM tanle_name 
+WHERE col_nameZ IS NULL
+
+SELECT * FROM table_name 
+WHERE col_name IS NULL
+
+
+
+
+
+
 
 
