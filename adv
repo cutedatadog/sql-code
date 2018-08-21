@@ -1,6 +1,0 @@
-select top number * from table_name
-select top 20 percent * from table_name
-#################################################
-like -- search for certain type/pattern
-select * from table_name where col_name like ("N%" OR "%g") AND "%con%" ## return in col_name, value start with N or end with g, and contain con
-select * from table_name where col_name NOT LIKE "%nol%"  ## return in col_name, value don't contain nol
